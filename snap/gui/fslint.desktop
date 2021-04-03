@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=FSlint Janitor
+Comment=File System Lint cleaner
+Exec=fslint-gui
+Terminal=false
+Type=Application
+Icon=fslint_icon
+Categories=System;Filesystem;GTK;Utility;
+X-Ubuntu-Gettext-Domain=fslint

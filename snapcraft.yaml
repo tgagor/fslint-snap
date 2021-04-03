@@ -7,10 +7,11 @@ base: core18
 confinement: devmode
 
 parts:
-  fslint:
+  pkg:
     plugin: nil
-    # source: https://github.com/pixelb/fslint.git
     stage-packages:
+      - python-gtk2
+      - python-glade2
       - fslint
 
 apps:
