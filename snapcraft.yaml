@@ -1,19 +1,63 @@
-name: fslint
+name: fslint-gui
 version: git
-summary: FSlint
+summary: File System Lint detector and cleaner
 description: |
-  File System Lint detector and cleaner.
+  FSlint - A utility to find File System lint.
+  This includes duplicate files, empty directories,
+  problematic filenames, etc.
 base: core18
-confinement: devmode
+grade: devel
+# confinement: devmode
+# grade: stable
+confinement: strict
+architectures:
+  - build-on: amd64
+  - build-on: 'i386'
+
+icon: fslint_icon.png
+
+apps:
+  fslint-gui:
+    command: usr/bin/fslint-gui
+    # command: desktop-launch $SNAP/usr/bin/fslint-gui
+    desktop: usr/share/applications/fslint.desktop
+    plugs: [x11, gsettings, wayland, home, removable-media]
+
+layout:
+  /usr/share/applications/fslint.desktop:
+    bind-file: $SNAP/usr/share/applications/fslint.desktop
+  /usr/share/doc/fslint:
+    bind: $SNAP/usr/share/doc/fslint
+  /usr/share/fslint:
+    bind: $SNAP/usr/share/fslint
+  /usr/share/locale:
+    bind: $SNAP/usr/share/locale
+  /usr/share/man:
+    bind: $SNAP/usr/share/man
+  /usr/share/pixmaps/fslint_icon.png:
+    bind-file: $SNAP/usr/share/fslint/fslint_icon.png
+
+# license: GPL
 
 parts:
-  pkg:
+  fslint:
     plugin: nil
     stage-packages:
       - python-gtk2
       - python-glade2
+      - fontconfig
       - fslint
 
-apps:
-  fslint-gui:
-    command: fslint-gui
+plugs:
+  gtk-3-themes:
+    interface: content
+    target: $SNAP/share/themes
+    default-provider: gtk-common-themes:gtk-3-themes
+  icon-themes:
+    interface: content
+    target: $SNAP/share/icons
+    default-provider: gtk-common-themes:icon-themes
+  sound-themes:
+    interface: content
+    target: $SNAP/share/sounds
+    default-provider: gtk-common-themes:sounds-themes
