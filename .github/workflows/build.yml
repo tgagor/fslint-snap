@@ -25,9 +25,9 @@ jobs:
           use_lxd: true
           snapcraft_token: ${{ secrets.SNAPCRAFT_TOKEN }}
 
-      - name: Build SNAP package
+      - name: Test SNAP package
         run: |
-          sg lxd -c 'snapcraft --use-lxd build'
+          sg lxd -c 'snapcraft build --use-lxd'
           ls -la
 
       - name: Bump version and push tag
@@ -39,7 +39,7 @@ jobs:
 
       - name: Release SNAP package
         run: |
-          sg lxd -c 'snapcraft --use-lxd build'
+          sg lxd -c 'snapcraft --use-lxd'
           ls -la
 
       - name: SNAP upload
