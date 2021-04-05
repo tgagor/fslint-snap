@@ -22,6 +22,7 @@ jobs:
         uses: samuelmeuli/action-snapcraft@v1
       - name: Build, tag and push the Docker image
         run: |
+          snap install multipass
           snapcraft
 
   # release:
