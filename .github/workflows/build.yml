@@ -42,7 +42,7 @@ jobs:
           sg lxd -c 'snapcraft --use-lxd'
           ls -la
 
-      - name: SNAP upload
+      - name: Upload SNAP package
         id: snapcraft
         run: |
           snapcraft upload *.snap --release edge

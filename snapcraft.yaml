@@ -1,4 +1,4 @@
-name: fslint-gui
+name: fslint-unofficial
 version: git
 summary: File System Lint detector and cleaner
 description: |
@@ -15,7 +15,7 @@ architectures:
 icon: fslint_icon.png
 
 apps:
-  fslint-gui:
+  fslint-unofficial:
     command: usr/bin/fslint-gui
     # command: desktop-launch $SNAP/usr/bin/fslint-gui
     desktop: usr/share/applications/fslint.desktop
