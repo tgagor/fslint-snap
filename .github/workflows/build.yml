@@ -1,0 +1,63 @@
+name: build
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - '*.*.*'
+  pull_request:
+    branches:
+      - master
+  # schedule:
+  #   # weekly: at 04:13 on Monday
+  #   - cron: '13 4 * * 1'
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Snapcraft
+        uses: samuelmeuli/action-snapcraft@v1
+      - name: Build, tag and push the Docker image
+        run: |
+          snapcraft
+
+  # release:
+  #   runs-on: ubuntu-20.04
+  #   needs:
+  #     - build
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Bump version and push tag
+  #       if: github.ref == 'refs/heads/master'
+  #       id: tag_version
+  #       uses: mathieudutour/github-tag-action@v5.3
+  #       with:
+  #         github_token: ${{ secrets.GITHUB_TOKEN }}
+  #
+  #     - name: Create normal GitHub release
+  #       if: github.ref == 'refs/heads/master' && github.event_name != 'schedule'
+  #       uses: actions/create-release@v1
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       with:
+  #         tag_name: ${{ steps.tag_version.outputs.new_tag }}
+  #         release_name: Release ${{ steps.tag_version.outputs.new_tag }}
+  #         body: ${{ steps.tag_version.outputs.changelog }}
+  #
+  #     - name: Get current date
+  #       if: github.event_name == 'schedule'
+  #       id: date
+  #       run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+  #     - name: Create a weekly GitHub release
+  #       if: github.event_name == 'schedule'
+  #       uses: actions/create-release@v1
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       with:
+  #         tag_name: ${{ steps.tag_version.outputs.new_tag }}
+  #         release_name: Release ${{ steps.tag_version.outputs.new_tag }}
+  #         body: |
+  #           Weekly rebuild on ${{ steps.date.outputs.date }}
