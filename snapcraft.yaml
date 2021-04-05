@@ -6,9 +6,7 @@ description: |
   This includes duplicate files, empty directories,
   problematic filenames, etc.
 base: core18
-grade: devel
-# confinement: devmode
-# grade: stable
+grade: stable
 confinement: strict
 architectures:
   - build-on: amd64
@@ -21,7 +19,7 @@ apps:
     command: usr/bin/fslint-gui
     # command: desktop-launch $SNAP/usr/bin/fslint-gui
     desktop: usr/share/applications/fslint.desktop
-    plugs: [x11, gsettings, wayland, home, removable-media]
+    plugs: [x11, gsettings, wayland, home, removable-media, desktop, desktop-legacy]
 
 layout:
   /usr/share/applications/fslint.desktop:
