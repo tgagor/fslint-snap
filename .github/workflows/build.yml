@@ -30,35 +30,19 @@ jobs:
           sg lxd -c 'snapcraft --use-lxd'
           ls -la
 
-      - name: Bump version and push tag
-        if: github.ref == 'refs/heads/master'
-        id: tag_version
-        uses: mathieudutour/github-tag-action@v5.3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-
-      # - name: Release SNAP package
-      #   run: |
-      #     sg lxd -c 'snapcraft --use-lxd'
-      #     ls -la
-
-      - name: List SNAP package
-        id: snapcraft
-        run: |
-          #snapcraft upload *.snap --release edge
-          echo ::set-output name=snap::$(ls *.snap)
-
-      - name: Artifact upload
-        uses: actions/upload-artifact@v2
-        with:
-          path: ${{ steps.snapcraft.outputs.snap }}
-
   release:
     runs-on: ubuntu-18.04
     needs:
       - build
     steps:
       - uses: actions/checkout@v2
+
+      - name: Bump version and push tag
+        if: github.ref == 'refs/heads/master'
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v5.3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create normal GitHub release
         if: github.ref == 'refs/heads/master' && github.event_name != 'schedule'
