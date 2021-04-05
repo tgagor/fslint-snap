@@ -1,6 +1,9 @@
 FSlint GUI
 ==========
 
+[![build](https://github.com/tgagor/fslint-snap/actions/workflows/build.yml/badge.svg)](https://github.com/tgagor/fslint-snap/actions/workflows/build.yml)
+[![fslint-unofficial](https://snapcraft.io/fslint-unofficial/badge.svg)](https://snapcraft.io/fslint-unofficial)
+
 This repo provides SNAP packages available as `fslint-unofficial` for [`fslint`](https://github.com/pixelb/fslint) GUI tool.
 
 Tool is pretty useful for finding file duplicates and performing other bath processing on big sets of files.
