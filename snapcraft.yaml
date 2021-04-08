@@ -19,16 +19,20 @@ compression: lzo
 
 apps:
   fslint-unofficial:
-    command: usr/bin/fslint-gui
+    command: desktop-launch $SNAP/usr/bin/fslint-gui
     desktop: usr/share/applications/fslint.desktop
+    environment:
+      # Fallback to XWayland if running in a Wayland session as GTK2 don't support it
+      DISABLE_WAYLAND: 1
     plugs:
-      - x11
-      - gsettings
-      - wayland
-      - home
-      - removable-media
       - desktop
       - desktop-legacy
+      - gsettings
+      - home
+      - removable-media
+      - unity7
+      - wayland
+      - x11
 
 layout:
   /usr/share/applications/fslint.desktop:
@@ -39,25 +43,51 @@ layout:
     bind: $SNAP/usr/share/fslint
   /usr/share/locale:
     bind: $SNAP/usr/share/locale
-  /usr/share/man:
-    bind: $SNAP/usr/share/man
-  /usr/share/pixmaps/fslint_icon.png:
-    bind-file: $SNAP/usr/share/fslint/fslint_icon.png
 
 parts:
   fslint:
     plugin: nil
     stage-packages:
-      - python-gtk2
-      - python-glade2
-      - fontconfig
       - fslint
+    after:
+      - desktop-gtk2
+  desktop-gtk2:
+    source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
+    source-subdir: gtk
+    plugin: make
+    make-parameters: ["FLAVOR=gtk2"]
+    build-packages:
+      - build-essential
+      - libgtk2.0-dev
+    stage-packages:
+      - adwaita-icon-theme
+      - dmz-cursor-theme
+      - fontconfig
+      - gnome-themes-standard
+      - ibus-gtk
+      - libappindicator1
+      - libgdk-pixbuf2.0-0
+      - libglib2.0-bin
+      - libgtk2.0-0
+      - libgtk2.0-bin
+      - libibus-1.0-5
+      - libxkbcommon0  # XKB_CONFIG_ROOT
+      - light-themes
+      - locales-all
+      - shared-mime-info
+      - ttf-ubuntu-font-family
+      - unity-gtk2-module
+      - xdg-user-dirs
 
 plugs:
-  gtk-3-themes:
+  gtk-2-engines:
     interface: content
-    target: $SNAP/share/themes
-    default-provider: gtk-common-themes:gtk-3-themes
+    target: $SNAP/lib/gtk-2.0
+    default-provider: gtk2-common-themes
+  gtk-2-themes:
+    interface: content
+    target: $SNAP/data-dir/themes
+    default-provider: gtk-common-themes
   icon-themes:
     interface: content
     target: $SNAP/share/icons
