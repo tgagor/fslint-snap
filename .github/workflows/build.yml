@@ -29,6 +29,11 @@ jobs:
         run: |
           sg lxd -c 'snapcraft --use-lxd'
 
+      - name: Review SNAP package
+        run: |
+          sudo snap install review-tools
+          review-tools.snap-review fslint-unofficial_*.snap
+
   release:
     runs-on: ubuntu-18.04
     needs:
