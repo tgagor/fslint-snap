@@ -19,7 +19,14 @@ apps:
   fslint-unofficial:
     command: usr/bin/fslint-gui
     desktop: usr/share/applications/fslint.desktop
-    plugs: [x11, gsettings, wayland, home, removable-media, desktop, desktop-legacy]
+    plugs:
+      - x11
+      - gsettings
+      - wayland
+      - home
+      - removable-media
+      - desktop
+      - desktop-legacy
 
 layout:
   /usr/share/applications/fslint.desktop:
