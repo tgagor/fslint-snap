@@ -10,7 +10,7 @@ on:
     branches:
       - master
   schedule:
-    # monthly: at 04:13 on Monday
+    # monthly: at 04:13 on first day of month
     - cron: '13 4 1 * *'
 
 jobs:
